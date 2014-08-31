@@ -11,14 +11,17 @@ nsPerTick=: TICKS_PER_SECOND %~ 10^9
 lastTime=: nanoTime''
 deltaTick=: 0
 
+NB. Counts ticks and frames per second
 ticks=: 0
 frames=: 0
 
+NB. Will increment once per second, when FPS/TPS is outputted
 runningTime=: 6!:1''
 
 NB. Defines the window and canvas
 WINDOW=: 0 : 'pc window; pn "Breakout"; minwh ',(":WIDTH),' ',(":HEIGHT),'; cc canvas isidraw flush;'
 
+NB. ---------------------------------------------------------
 sys_timer_z_=: 3 : 0
 cocurrent 'pjuicedemo'
 
@@ -44,6 +47,7 @@ end.
 EMPTY
 )
 
+NB. ---------------------------------------------------------
 render=: 3 : 0
 glclear''
 glpaintx''
@@ -53,6 +57,7 @@ tick=: 3 : 0
 EMPTY
 )
 
+NB. ---------------------------------------------------------
 window_canvas_char=: 3 : 0
 if. sysdata = 'q' do.
 stop''
@@ -63,6 +68,7 @@ window_close=: 3 : 0
 stop''
 )
 
+NB. ---------------------------------------------------------
 stop=: 3 : 0
 wd 'timer 0'
 wd 'pclose'
