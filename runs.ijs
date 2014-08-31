@@ -5,9 +5,7 @@ NB. verbs for running the game
 run=: 3 : 0
 wd WINDOW
 wd 'pshow'
-NB. wd 'timer 1'
-glclear''
-glpaintx''
+wd 'timer 1'
 EMPTY
 )
 
