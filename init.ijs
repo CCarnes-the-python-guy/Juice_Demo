@@ -1,3 +1,6 @@
+NB. =========================================================
 NB. init
 
-init =: 1
+coclass 'pjuicedemo'
+
+coinsert 'jgl2'
