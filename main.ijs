@@ -67,9 +67,11 @@ glbrush''
 glpen 1
 glrect ((glqwh'')&convertXywh)butifnull(]&(0 0 0 0)) 'xywh' from entities_entity_
 glpaintx''
+EMPTY
 )
 
 tick=: 3 : 0
+'tick''''' inl balls_ball_
 EMPTY
 )
 
