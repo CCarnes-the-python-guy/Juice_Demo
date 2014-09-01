@@ -71,7 +71,9 @@ NB. Will increment once per second, when FPS/TPS is outputted
 runningTime=: 6!:1''
 
 NB. Defines the window and canvas
-WINDOW=: 0 : 'pc window; pn "Breakout"; minwh ',(":WIDTH),' ',(":HEIGHT),'; cc canvas isidraw flush;'
+WINDOW=: 'pc window; pn "Breakout"; '
+WINDOW=: WINDOW, 'minwh ',(":WIDTH),' ',(":HEIGHT),'; '
+WINDOW=: WINDOW, 'cc canvas isidraw flush; pas 0 0'
 
 NB. ---------------------------------------------------------
 sys_timer_z_=: 3 : 0
