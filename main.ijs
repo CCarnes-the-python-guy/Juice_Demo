@@ -4,6 +4,8 @@ NB. game-wide constants and functions
 
 cocurrent 'pjuicedemo'
 
+NB. Regardless of the stretching of the screen, the graphics
+NB. will always be represented by coordinates of maximum value (WIDTH, HEIGHT)
 WIDTH=: 800
 HEIGHT=: 600
 
@@ -52,6 +54,9 @@ EMPTY
 )
 
 NB. ---------------------------------------------------------
+NB. scales xywh values in y by the width and height specified by x
+convertXywh=: 4 : '(,"2) x (*"1) (WIDTH, HEIGHT) (%~"1) 2 2 ($"1) y'"1
+
 render=: 3 : 0
 glclear''
 NB. background
@@ -60,7 +65,7 @@ NB. draw each entity on the screen in white
 glrgb 255 255 255
 glbrush''
 glpen 1
-glrect 'xywh' from entities_entity_
+glrect ((glqwh'')&convertXywh)butifnull(]&(0 0 0 0)) 'xywh' from entities_entity_
 glpaintx''
 )
 
