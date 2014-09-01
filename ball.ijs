@@ -22,12 +22,15 @@ codestroy''
 
 tick=: 3 : 0
 setXywh xywh + vel , 0 , 0
+NB. Collision with canvas boundaries
 if. (0 > {. xywh) +. (WIDTH_pjuicedemo_ < +/ 0 2 { xywh) do.
 vel=: vel * _1 1
 end.
 if. (0 > 1 { xywh) +. (HEIGHT_pjuicedemo_ < +/ 1 3 { xywh) do. 
 vel=: vel * 1 _1
 end.
+otherCollisions=: (collidesWith) butifnull (0&[) entities_entity_ -. coname''
+vel=: vel * */ <: +: -. (((|. @: (+./"1)) *. (xor_pjuicedemo_"1))"2) 2 2 $"1 otherCollisions
 EMPTY
 )
 

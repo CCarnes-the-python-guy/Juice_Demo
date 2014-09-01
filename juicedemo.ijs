@@ -11,7 +11,10 @@ NB. returns nanoseconds since start of session
 nanoTime=: (10^9) * 6!:1
 
 NB. verb u unless y is empty
-butifnull =: 2 : 'v"_`u@.(*@#@])'
+butifnull=: 2 : 'v"_`u@.(*@#@])'
+
+NB. Exclusive or
+xor=: +./ *. # ~: +/
 
 NB. Utilities for managing objects and locales
 NB. loc creates versions of command x localized to each boxed locale in y
@@ -41,16 +44,14 @@ codestroy''
 )
 
 NB. Returns four boolean values corresponding to a collision on the
-NB. left, top, right, or bottom of this entity
+NB. left, right, top, or bottom of this entity
 NB. y is the other entity used in the comparison
-collidesWith=: 3 : 0
+collidesWith=: 3 : 0"0
 'thisMin thatMin'=. 2 ({."1) xywh ,: xywh__y
-smoutput thisMin
 'thisMax thatMax'=. (thisMin ,: thatMin) + _2 ({."1) xywh ,: xywh__y
-smoutput thisMax
 'minX minY'=. (thisMin < thatMax) *. (thisMin > thatMin)
 'maxX maxY'=. (thisMax > thatMin) *. (thisMax < thatMax)
-minX, minY, maxX, maxY
+minX, maxX, minY, maxY
 )
 NB. =========================================================
 NB. ball:
@@ -76,12 +77,15 @@ codestroy''
 
 tick=: 3 : 0
 setXywh xywh + vel , 0 , 0
+NB. Collision with canvas boundaries
 if. (0 > {. xywh) +. (WIDTH_pjuicedemo_ < +/ 0 2 { xywh) do.
 vel=: vel * _1 1
 end.
 if. (0 > 1 { xywh) +. (HEIGHT_pjuicedemo_ < +/ 1 3 { xywh) do. 
 vel=: vel * 1 _1
 end.
+otherCollisions=: (collidesWith) butifnull (0&[) entities_entity_ -. coname''
+vel=: vel * */ <: +: -. (((|. @: (+./"1)) *. (xor_pjuicedemo_"1))"2) 2 2 $"1 otherCollisions
 EMPTY
 )
 
@@ -122,6 +126,8 @@ NB. ---------------------------------------------------------
 sys_timer_z_=: 3 : 0
 cocurrent 'pjuicedemo'
 
+try.
+
 now=. nanoTime''
 deltaTick=: deltaTick + (now - lastTime) % nsPerTick
 lastTime=: nanoTime''
@@ -139,6 +145,14 @@ if. 1 <: (6!:1'') - runningTime do.
 runningTime =: >: runningTime
 NB. smoutput 'Frames: ' , (":frames) , ' Ticks: ' , (":ticks)
 frames=: ticks =: 0
+end.
+
+catch.
+
+wd 'timer 0'
+smoutput 'Error: ' , > (<: 13!:11 '') { 9!:8 ''
+smoutput 13!:12 ''
+
 end.
 
 EMPTY

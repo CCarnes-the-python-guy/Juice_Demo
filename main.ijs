@@ -31,6 +31,8 @@ NB. ---------------------------------------------------------
 sys_timer_z_=: 3 : 0
 cocurrent 'pjuicedemo'
 
+try.
+
 now=. nanoTime''
 deltaTick=: deltaTick + (now - lastTime) % nsPerTick
 lastTime=: nanoTime''
@@ -48,6 +50,14 @@ if. 1 <: (6!:1'') - runningTime do.
 runningTime =: >: runningTime
 NB. smoutput 'Frames: ' , (":frames) , ' Ticks: ' , (":ticks)
 frames=: ticks =: 0
+end.
+
+catch.
+
+wd 'timer 0'
+smoutput 'Error: ' , > (<: 13!:11 '') { 9!:8 ''
+smoutput 13!:12 ''
+
 end.
 
 EMPTY

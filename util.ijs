@@ -5,7 +5,10 @@ NB. returns nanoseconds since start of session
 nanoTime=: (10^9) * 6!:1
 
 NB. verb u unless y is empty
-butifnull =: 2 : 'v"_`u@.(*@#@])'
+butifnull=: 2 : 'v"_`u@.(*@#@])'
+
+NB. Exclusive or
+xor=: +./ *. # ~: +/
 
 NB. Utilities for managing objects and locales
 NB. loc creates versions of command x localized to each boxed locale in y
