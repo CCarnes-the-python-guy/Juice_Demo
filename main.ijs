@@ -2,6 +2,8 @@ NB. =========================================================
 NB. main:
 NB. game-wide constants and functions
 
+cocurrent 'pjuicedemo'
+
 WIDTH=: 800
 HEIGHT=: 600
 
@@ -40,7 +42,7 @@ frames=: >: frames
 
 if. 1 <: (6!:1'') - runningTime do.
 runningTime =: >: runningTime
-smoutput 'Frames: ' , (":frames) , ' Ticks: ' , (":ticks)
+NB. smoutput 'Frames: ' , (":frames) , ' Ticks: ' , (":ticks)
 frames=: ticks =: 0
 end.
 
@@ -50,6 +52,13 @@ EMPTY
 NB. ---------------------------------------------------------
 render=: 3 : 0
 glclear''
+NB. background
+glfill 0 0 0
+NB. draw each entity on the screen in white
+glrgb 255 255 255
+glbrush''
+glpen 1
+glrect 'xywh' from entities_entity_
 glpaintx''
 )
 

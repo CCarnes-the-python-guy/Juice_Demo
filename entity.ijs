@@ -3,12 +3,19 @@ NB. entity:
 NB. Any rectangular object on the screen
 coclass 'entity'
 
+NB. list of all created entities
+entities=: i. 0
+
 NB. y is the rectangle's xywh
 create=: 3 : 0
 xywh=: y
+entities_entity_=: entities_entity_ , coname''
 )
 
-destroy=: codestroy
+destroy=: 3 : 0
+entities_entity_=: entities_entity_ -. coname''
+codestroy''
+)
 
 NB. Returns four boolean values corresponding to a collision on the
 NB. left, top, right, or bottom of this entity
