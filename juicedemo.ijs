@@ -84,14 +84,41 @@ end.
 if. (0 > 1 { xywh) +. (HEIGHT_pjuicedemo_ < +/ 1 3 { xywh) do. 
 vel=: vel * 1 _1
 end.
-otherCollisions=: (collidesWith) butifnull (0&[) entities_entity_ -. coname''
-vel=: vel * */ <: +: -. (((|. @: (+./"1)) *. (xor_pjuicedemo_"1))"2) 2 2 $"1 otherCollisions
+NB. Check for collision with other entities
+validCollisions=: > (* vel) { '';(0 1);(1 0)
+otherEntities=: entities_entity_ -. coname''
+otherCollisions=: +./"1 ( ( ((*./"1) @: (+./"1)) *. (validCollisions&*.) *. (xor_pjuicedemo_"1) )"2 ) 2 2 $"1 (collidesWith) butifnull (0&[) otherEntities
+NB. Change velocity
+vel=: vel * <: +: -. +./ otherCollisions
+NB. Remove bricks that have been hit
+'destroy''''' inl (bricks_brick_&-.)^:2 otherEntities #~ +./"1 otherCollisions
 EMPTY
 )
 
 NB. pass in xywh
 setXywh=: 3 : 0
 xywh_entity_ =: xywh =: y
+)
+NB. =========================================================
+NB. brick:
+NB. Object that is destroyed by ball on collision
+coclass 'brick'
+coinsert 'entity'
+
+NB. List of all bricks
+bricks=: i. 0
+
+NB. y contains xywh
+create=: 3 : 0
+xywh =: y
+bricks_brick_=: bricks_brick_ , coname''
+create_entity_ f. xywh
+)
+
+destroy=: 3 : 0
+destroy_entity_ f. ''
+bricks_brick_=: bricks_brick_ -. coname''
+codestroy''
 )
 NB. =========================================================
 NB. main:
@@ -143,7 +170,7 @@ frames=: >: frames
 
 if. 1 <: (6!:1'') - runningTime do.
 runningTime =: >: runningTime
-NB. smoutput 'Frames: ' , (":frames) , ' Ticks: ' , (":ticks)
+smoutput 'Frames: ' , (":frames) , ' Ticks: ' , (":ticks)
 frames=: ticks =: 0
 end.
 
@@ -206,6 +233,7 @@ leftWall=: (0 , 0 , 10 , HEIGHT - 50) conew 'entity'
 topWall=: (10 , 0 , (WIDTH - 20) , 10) conew 'entity'
 rightWall=: ((WIDTH - 10) , 0 , 10 , HEIGHT - 50) conew 'entity'
 ball=: (((5 -~ -: WIDTH) , 500 10 10);(5 5)) conew 'ball'
+brick=: ((20 50) ,~"1 (30 60) *"1 ,/ (i. 5) (,"0) 5 # ,: i. 5) conew"1 'brick'
 
 wd WINDOW
 wd 'pshow'

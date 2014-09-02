@@ -7,5 +7,6 @@ init.ijs
 util.ijs
 entity.ijs
 ball.ijs
+brick.ijs
 main.ijs
 runs.ijs
